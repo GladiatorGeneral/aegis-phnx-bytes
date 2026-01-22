@@ -1,0 +1,25 @@
+{
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev",
+    "typecheck": "turbo run typecheck"
+  },
+  "private": true,
+  "packageManager": "npm@10.9.2",
+  "devDependencies": {
+    "prettier": "latest",
+    "turbo": "latest",
+    "typescript": "latest"
+  },
+  "name": "phnxbyte",
+  "dependencies": {
+    "@ai-sdk/deepseek": "^2.0.5",
+    "@tailwindcss/postcss": "^4.1.18"
+  }
+}
