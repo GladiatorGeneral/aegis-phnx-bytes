@@ -2,14 +2,42 @@
 
 **A generic, high-performance Construction AI Agency platform.**
 
-Aegis Phoenix Bytes is a sophisticated AI-powered system designed to automate complex workflows in the construction industry. It leverages **Recursive Language Models (RLMs)**, **Model Context Protocol (MCP)**, and the **Vercel AI SDK** to provide deep analysis of contracts, financial forecasting, and regulatory monitoring.
+Aegis Phoenix Bytes is a sophisticated AI-powered system designed to automate complex workflows in the construction industry. It leverages a **Three-Tier Hierarchical MCP Architecture**, **Recursive Language Models (RLMs)**, and the **Vercel AI SDK** to provide deep analysis of contracts, financial forecasting, and regulatory monitoring.
+
+## 🏛️ Three-Tier MCP Architecture
+
+The system is organized into a hierarchical knowledge framework:
+
+```
+TIER 1: STRATEGIC (Upper Echelon)
+└── Theoretical frameworks, governance, strategy, standards
+    └── TIER 2: TACTICAL (Middle Management)
+        └── Methodologies, processes, analysis, optimization
+            └── TIER 3: OPERATIONAL (Execution)
+                └── Tools, tasks, calculations, implementations
+```
+
+### Tier 1: Strategic Knowledge
+- **Frameworks**: Earned Value Management (EVM), Critical Path Method (CPM), Risk Management
+- **Governance**: AIA Contracts, OSHA Standards, LEED Certification, ConsensusDocs
+- **Strategic Models**: Project Delivery Method Selection, Make vs Buy Analysis
+
+### Tier 2: Tactical Operations
+- **Methodologies**: Change Order Evaluation, Cost Forecasting, Schedule Delay Analysis
+- **Processes**: Subcontractor Prequalification, Cash Flow Management, Punch List Management
+- **Risk Management**: Cost Overrun Risk, Schedule Risk Assessment
+
+### Tier 3: Operational Execution
+- **Calculators**: EVM Calculator, Markup Calculator, Retention Calculator, Productivity Calculator
+- **Document Processors**: Invoice Extractor, Contract Clause Extractor, Daily Report Summarizer
+- **Task Execution**: Pay Application Review, RFI Response Generation
 
 ## 🚀 Features
 
 ### 🧠 Core Intelligence
 - **Recursive Contract Analysis (RLM)**: A specialized agent that decomposes 200+ page contracts into massive executable plans, identifying cross-document risks and financial liabilities.
 - **Monte Carlo Profit Simulation**: Runs thousands of financial scenarios ("What if steel goes up 15%?") to forecast project viability.
-- **RAG Knowledge Base**: Context-aware retrieval for past project data and regulations.
+- **Context-Aware Query Classification**: Automatically routes queries to the appropriate tier and applies relevant frameworks.
 
 ### 🛠️ Specialized Tools
 - **Change Order Logger**: Automatically parses emails/chats to log structure change orders.
@@ -19,6 +47,7 @@ Aegis Phoenix Bytes is a sophisticated AI-powered system designed to automate co
 
 ### 🔌 Connectivity
 - **MCP Server**: Exposes internal tools to external AI clients like **Claude Desktop**, allowing developers to "chat" with the project database and file system.
+- **Prompt-Based API**: Primary interface at `/api/construction-agent` using structured prompts and response schemas.
 - **Next.js Dashboard**: A client-facing web application for executives to view dashboards and generate reports.
 
 ## 📂 Project Structure
@@ -28,16 +57,20 @@ This project is a **Monorepo** managed by Turbo.
 ```
 .
 ├── apps/
-│   └── web/                 # Next.js App (Dashboard + API + MCP Server)
+│   └── web/                          # Next.js App (Dashboard + API + MCP Server)
 │       ├── lib/
 │       │   └── construction-agent/
-│       │       ├── agents/  # RLM and specialized agents
-│       │       ├── tools/   # Zod-defined tools (Finance, Docs, etc.)
-│       │       └── rag/     # Vector DB logic
-│       └── mcp/             # MCP Server entry point
+│       │       ├── mcp-specification.md   # Full MCP Specification
+│       │       ├── agents/                # RLM and specialized agents
+│       │       ├── prompts/               # Prompt library & RLM controller
+│       │       │   ├── mcp-prompts.ts     # Three-tier prompt templates
+│       │       │   └── rlm-controller.ts  # RLM system prompt
+│       │       ├── tools/                 # Zod-defined tools
+│       │       └── rag/                   # Vector DB logic
+│       └── mcp/                           # MCP Server (legacy tool-based)
 ├── packages/
-│   ├── core/                # Shared types and business logic
-│   └── ui/                  # Shared UI components
+│   ├── core/                         # Shared types and business logic
+│   └── ui/                           # Shared UI components
 └── README.md
 ```
 
