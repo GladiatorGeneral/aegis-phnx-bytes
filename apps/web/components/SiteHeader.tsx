@@ -22,6 +22,9 @@ function NavLinks() {
       <Link className={linkBase} href='/vscode'>
         VS Code
       </Link>
+      <Link className={linkBase} href='/phnxaura'>
+        PhnxAura
+      </Link>
     </nav>
   );
 }

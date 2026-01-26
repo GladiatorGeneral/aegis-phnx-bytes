@@ -83,3 +83,38 @@ export const risks = pgTable('risks', {
   status: text('status').default('active'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+// --- PhnxAura Security & RAG Models (New Addition) ---
+
+export const auditLogs = pgTable('audit_logs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  timestamp: timestamp('timestamp').defaultNow(),
+  agentId: text('agent_id').notNull(),
+  action: text('action').notNull(),
+  resource: text('resource').notNull(),
+  outcome: text('outcome').notNull(),
+  ipHash: text('ip_hash').notNull(),
+  userAgent: text('user_agent').notNull(),
+  metadata: jsonb('metadata'),
+  riskScore: integer('risk_score').default(0),
+});
+
+export const knowledgeBase = pgTable('knowledge_base', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  namespace: text('namespace').notNull(),
+  source: text('source').notNull(),
+  contentHash: text('content_hash').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Renamed to avoid conflict with existing agentSessions
+export const phnxAgentSessions = pgTable('phnx_agent_sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  apiKeyHash: text('api_key_hash').notNull(),
+  startTime: timestamp('start_time').defaultNow(),
+  endTime: timestamp('end_time'),
+  totalRequests: integer('total_requests').default(0),
+  costIncurred: decimal('cost_incurred', { precision: 12, scale: 4 }).default('0'),
+  status: text('status').default('ACTIVE'), // ACTIVE, COMPLETED, EXPIRED
+});

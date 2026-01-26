@@ -1,0 +1,50 @@
+{
+  "name": "phnxaura-vscode",
+  "displayName": "PHNXAURA",
+  "description": "Multi-AI Orchestration Agency Client",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "phnxaura.generate",
+        "title": "PHNXAURA: Generate with Context"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "phnxauraSecurity",
+          "name": "PHNXAURA Security"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PHNXAURA",
+      "properties": {
+        "phnxaura.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API Key for PHNXAURA services"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "18.x",
+    "typescript": "^5.0.0"
+  }
+}
