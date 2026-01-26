@@ -20,6 +20,14 @@
   "name": "phnxbyte",
   "dependencies": {
     "@ai-sdk/deepseek": "^2.0.5",
-    "@tailwindcss/postcss": "^4.1.18"
+    "@huggingface/inference": "^4.13.10",
+    "@pinecone-database/pinecone": "^6.1.4",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.36.1",
+    "glob": "^13.0.0",
+    "ignore": "^7.0.5",
+    "simple-git": "^3.30.0",
+    "vm2": "^3.10.3"
   }
 }
