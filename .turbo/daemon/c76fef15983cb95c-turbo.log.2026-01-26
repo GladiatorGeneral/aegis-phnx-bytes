@@ -1,0 +1,9 @@
+2026-01-26T18:02:46.300676Z  WARN turborepo_filewatch: failed to remove cookie file failed to remove file `E:\Projects\aegis-phnx-bytes\.turbo\cookies\.turbo-cookie`
+2026-01-26T18:02:48.805672Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T18:02:48.850980Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T18:42:44.523112Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T18:42:45.192610Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T20:03:06.762088Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T20:03:07.896615Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T20:23:04.722744Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2026-01-26T20:23:05.838566Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running

@@ -43,10 +43,6 @@ export class AgentOrchestrator {
         console: {
           log: (...args: any[]) => console.log('[Agent Sandbox]', ...args)
         }
-      },
-      require: {
-        external: false,
-        builtin: ['fs', 'path']
       }
     });
   }

@@ -1,7 +1,7 @@
 // lib/phnxaura/rag/document-processor.ts
 import { glob } from 'glob';
 import { readFile } from 'fs/promises';
-import { ignore } from 'ignore';
+import ignore from 'ignore';
 import { VectorStore } from './vector-store';
 import { DocumentChunk } from '@/types/phnxaura';
 import path from 'path';

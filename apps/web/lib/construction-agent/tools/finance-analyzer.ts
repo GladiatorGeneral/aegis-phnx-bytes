@@ -26,13 +26,15 @@ const mockProjectAPI = {
   }
 };
 
+const financeAnalyzerSchema = z.object({
+  projectId: z.string().describe('Project ID to analyze'),
+  forecastMonths: z.number().min(1).max(24).default(6).describe('Months to forecast')
+});
+
 export const financeAnalyzerTool = tool({
   description: 'Analyzes project financial data and estimates future cash flow',
-  parameters: z.object({
-    projectId: z.string().describe('Project ID to analyze'),
-    forecastMonths: z.number().min(1).max(24).default(6).describe('Months to forecast')
-  }),
-  execute: async ({ projectId, forecastMonths }): Promise<ToolResponse<CashFlowProjection>> => {
+  inputSchema: financeAnalyzerSchema,
+  execute: async ({ projectId, forecastMonths }) => {
     try {
       const months = forecastMonths || 6;
       const data = await mockProjectAPI.getFinancialData(projectId);
@@ -76,5 +78,5 @@ export const financeAnalyzerTool = tool({
         error: `Financial analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}`
       };
     }
-  },
+  }
 });

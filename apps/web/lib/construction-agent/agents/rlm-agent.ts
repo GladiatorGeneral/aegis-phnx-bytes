@@ -32,11 +32,10 @@ export async function analyzeContractWithRLM(documentText: string, userQuery: st
   `;
 
   const { text: finalAnalysis } = await generateText({
-    model: openai('gpt-4o'), // Use a high-reasoning model
+    model: openai('gpt-4o'),
     system: rlmSystemPrompt,
     prompt: fullPrompt,
     tools: agentTools,
-    maxSteps: 15, // Allows for multi-step planning, tool calls, and synthesis 
   });
 
   return finalAnalysis;
@@ -44,12 +43,14 @@ export async function analyzeContractWithRLM(documentText: string, userQuery: st
 
 // Expose the RLM Agent itself as a Tool so it can be called by the MCP Server
 // This allows the desktop user to say "Run a deep analysis on this text"
+const rlmAnalysisSchema = z.object({
+  documentText: z.string().describe('The full text content of the document to analyze'),
+  query: z.string().describe('The specific question or analysis goal (e.g., "Find all liability clauses")'),
+});
+
 export const rlmAnalysisTool = tool({
   description: 'Performs a deep, recursive analysis of a long construction document or contract using the RLM pattern.',
-  parameters: z.object({
-    documentText: z.string().describe('The full text content of the document to analyze'),
-    query: z.string().describe('The specific question or analysis goal (e.g., "Find all liability clauses")'),
-  }),
+  inputSchema: rlmAnalysisSchema,
   execute: async ({ documentText, query }) => {
     try {
       const result = await analyzeContractWithRLM(documentText, query);

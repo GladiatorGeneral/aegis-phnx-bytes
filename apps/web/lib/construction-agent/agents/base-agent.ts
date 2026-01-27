@@ -1,4 +1,4 @@
-import { generateText, CoreMessage } from 'ai';
+import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
 import { getIndex } from '../rag/pinecone';
@@ -20,10 +20,14 @@ export interface AgentResponse<T = any> {
 }
 
 export abstract class BaseAgent<TResult = any> {
-  protected model = openai('gpt-4o'); 
+  protected model: ReturnType<typeof openai>;
   protected abstract name: string;
   protected abstract description: string;
   protected abstract systemPrompt: string;
+
+  constructor() {
+    this.model = openai('gpt-4o');
+  }
 
   /**
    * Main entry point for the agent execution

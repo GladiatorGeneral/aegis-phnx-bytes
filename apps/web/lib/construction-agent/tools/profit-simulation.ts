@@ -33,20 +33,24 @@ type SimulationResult = {
   isLoss: boolean;
 };
 
+const profitSimulationSchema = z.object({
+  projectId: z.string().describe('The project ID to run simulations on'),
+  scenarios: z.array(z.object({
+    name: z.string().describe('Name of the scenario (e.g., "tariffs_impact")'),
+    materialCostIncreasePercent: z.number().default(0).describe('Percentage increase in material costs'),
+    laborCostIncreasePercent: z.number().default(0).describe('Percentage increase in labor costs'),
+    scheduleDelayWeeks: z.number().default(0).describe('Anticipated schedule delay in weeks'),
+    probability: z.number().min(0).max(1).describe('Probability of this scenario occurring (0.0 to 1.0)'),
+  })).describe('List of risk scenarios to simulate'),
+});
+
+type ProfitSimulationParams = z.infer<typeof profitSimulationSchema>;
+
 export const profitSimulationTool = tool({
   description: 'Runs Monte Carlo-style financial simulations for construction projects based on multiple risk scenarios (material hikes, delays, labor shortages).',
-  parameters: z.object({
-    projectId: z.string().describe('The project ID to run simulations on'),
-    scenarios: z.array(z.object({
-      name: z.string().describe('Name of the scenario (e.g., "tariffs_impact")'),
-      materialCostIncreasePercent: z.number().default(0).describe('Percentage increase in material costs'),
-      laborCostIncreasePercent: z.number().default(0).describe('Percentage increase in labor costs'),
-      scheduleDelayWeeks: z.number().default(0).describe('Anticipated schedule delay in weeks'),
-      probability: z.number().min(0).max(1).describe('Probability of this scenario occurring (0.0 to 1.0)'),
-    })).describe('List of risk scenarios to simulate'),
-  }),
-  execute: async ({ projectId, scenarios }): Promise<ToolResponse<{ results: SimulationResult[], weightedAverageProfit: number }>> => {
-    try {
+  inputSchema: profitSimulationSchema,
+  execute: async ({ projectId, scenarios }) => {
+  try {
       const baseline = await mockBudgetDB.getProjectBaselines(projectId);
       
       const results: SimulationResult[] = scenarios.map(scenario => {
@@ -96,5 +100,5 @@ export const profitSimulationTool = tool({
         error: `Simulation failed: ${error instanceof Error ? error.message : 'Unknown error'}`
       };
     }
-  },
+  }
 });

@@ -19,14 +19,16 @@ const mockProjectDB = {
   }
 };
 
+const changeOrderLoggerSchema = z.object({
+  clientMessage: z.string().describe('Raw email or chat message from client'),
+  projectId: z.string().describe('Target project ID'),
+  priority: z.enum(['low', 'medium', 'high']).optional()
+});
+
 export const changeOrderLoggerTool = tool({
   description: 'Parses client messages and automatically creates structured change order tickets',
-  parameters: z.object({
-    clientMessage: z.string().describe('Raw email or chat message from client'),
-    projectId: z.string().describe('Target project ID'),
-    priority: z.enum(['low', 'medium', 'high']).optional()
-  }),
-  execute: async ({ clientMessage, projectId, priority }): Promise<ToolResponse<ChangeOrder>> => {
+  inputSchema: changeOrderLoggerSchema,
+  execute: async ({ clientMessage, projectId, priority }) => {
     try {
       // Simple NLP extraction (replace with more sophisticated parsing)
       const costMatch = clientMessage.match(/\$(\d+[,\d]*(?:\.\d{2})?)/);
@@ -56,5 +58,5 @@ export const changeOrderLoggerTool = tool({
         error: `Failed to create change order: ${error instanceof Error ? error.message : 'Unknown error'}`
       };
     }
-  },
+  }
 });

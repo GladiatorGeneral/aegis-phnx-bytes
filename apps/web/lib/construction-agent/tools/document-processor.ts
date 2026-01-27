@@ -119,14 +119,16 @@ const mockOCRService = async (documentUrl: string): Promise<DocumentData> => {
   };
 };
 
+const documentProcessorSchema = z.object({
+  documentUrl: z.string().describe('URL to the document image or PDF (must be publicly accessible or signed)'),
+  documentType: z.enum(['invoice', 'contract', 'change-order']).optional().describe('Hint for the type of document')
+});
+
 export const documentProcessorTool = tool({
   description: 'Extracts structured data from invoices, contracts, and change orders using Vision AI',
-  parameters: z.object({
-    documentUrl: z.string().describe('URL to the document image or PDF (must be publicly accessible or signed)'),
-    documentType: z.enum(['invoice', 'contract', 'change-order']).optional().describe('Hint for the type of document')
-  }),
-  execute: async ({ documentUrl, documentType }): Promise<ToolResponse<DocumentData>> => {
-    try {
+  inputSchema: documentProcessorSchema,
+  execute: async ({ documentUrl, documentType }) => {
+  try {
       console.log(`[DocumentProcessor] Processing ${documentType} from ${documentUrl}`);
       const data = await processWithVision(documentUrl);
       return { success: true, data };
@@ -136,5 +138,5 @@ export const documentProcessorTool = tool({
         error: `Failed to process document: ${error instanceof Error ? error.message : 'Unknown error'}`
       };
     }
-  },
+  }
 });

@@ -1,17 +1,17 @@
 // lib/phnxaura/rag/vector-store.ts
 import { Pinecone } from '@pinecone-database/pinecone';
-import { HuggingFaceInference } from '@huggingface/inference';
+import { HfInference } from '@huggingface/inference';
 import { createHash } from 'crypto';
 import { RetrievalContext, DocumentChunk } from '@/types/phnxaura';
 
 export class VectorStore {
   private pinecone: Pinecone;
-  private hf: HuggingFaceInference;
+  private hf: HfInference;
   private indexName = process.env.PINECONE_INDEX || 'phnxaura-knowledge';
   
   constructor() {
     this.pinecone = new Pinecone({ apiKey: process.env.PINECONE_API_KEY! });
-    this.hf = new HuggingFaceInference(process.env.HF_API_KEY!);
+    this.hf = new HfInference(process.env.HF_API_KEY!);
   }
 
   async initialize() {

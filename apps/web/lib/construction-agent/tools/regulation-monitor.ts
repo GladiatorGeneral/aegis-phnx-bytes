@@ -24,15 +24,17 @@ const FALLBACK_REGULATIONS = [
   }
 ];
 
+const regulationMonitorSchema = z.object({
+  materialSpec: z.string().describe('Building material or specification to check'),
+  projectLocation: z.string().optional().describe('Project location for local codes'),
+  standard: z.enum(['IBC', 'LEED', 'OSHA', 'local']).optional()
+});
+
 export const regulationMonitorTool = tool({
   description: 'Checks building specifications against current codes and sustainability standards using RAG',
-  parameters: z.object({
-    materialSpec: z.string().describe('Building material or specification to check'),
-    projectLocation: z.string().optional().describe('Project location for local codes'),
-    standard: z.enum(['IBC', 'LEED', 'OSHA', 'local']).optional()
-  }),
-  execute: async ({ materialSpec, projectLocation, standard }): Promise<ToolResponse<ComplianceResult>> => {
-    try {
+  inputSchema: regulationMonitorSchema,
+  execute: async ({ materialSpec, projectLocation, standard }) => {
+  try {
       console.log(`[RegulationMonitor] Checking: ${materialSpec} (${standard || 'General'})`);
       
       let relevantDocs: Array<{ code: string; text: string }> = [];
@@ -104,5 +106,5 @@ export const regulationMonitorTool = tool({
         error: `Compliance check failed: ${error instanceof Error ? error.message : 'Unknown error'}`
       };
     }
-  },
+  }
 });

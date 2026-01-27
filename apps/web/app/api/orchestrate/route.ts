@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: error.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Validation failed', details: error.issues }, { status: 400 });
     }
     console.error(error);
     return NextResponse.json({ error: 'Orchestration failed' }, { status: 500 });
